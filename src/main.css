@@ -155,7 +155,6 @@ input[type="number"] {
     justify-content: center;
     align-items: center;
 
-    /* height: 100%; */
     padding: calc(var(--space) * 6);
     border-radius: calc(var(--space) * 8);
 

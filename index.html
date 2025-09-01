@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Home</title>
+    <title>Tip Calculator</title>
 
     <!-- Viewport -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -387,18 +387,19 @@
                 type="number"
                 name="bill"
                 value=""
+                min="0.01"
+                step="1"
                 placeholder="0"
-                minlength=""
-                maxlength=""
               />
             </div>
+            <span class="" aria-live="polite" id="error-bill" hidden></span>
           </div>
 
           <div class="o-input_area">
             <p class="f-preset:5 u-color:grey-500">Select Tip %</p>
             <div class="o-radio_grid">
               <div class="c-radio">
-                <input type="radio" id="tip-5" name="tip" value="5" />
+                <input type="radio" id="tip-5" name="tip" value="5" checked />
                 <label class="f-preset:2" for="tip-5" tabindex="0">5%</label>
               </div>
               <div class="c-radio">
@@ -424,9 +425,7 @@
                 type="number"
                 name="tip"
                 value=""
-                pattern="[0-9]*"
                 placeholder="Custom"
-                minlength="1"
                 maxlength="3"
               />
             </div>
@@ -448,7 +447,6 @@
                 name="people"
                 value=""
                 placeholder="0"
-                minlength="1"
                 maxlength="100"
               />
             </div>
@@ -463,7 +461,9 @@
                 <h1 class="f-preset:4 u-color:white">Tip Amount</h1>
                 <p class="f-preset:5 u-color:grey-400">/ person</p>
               </div>
-              <h2 id="result-tip" class="f-preset:1 u-color:green-400">$0.00</h2>
+              <h2 id="result-tip" class="f-preset:1 u-color:green-400">
+                $0.00
+              </h2>
             </div>
 
             <div class="o-checkout_line">
@@ -471,7 +471,9 @@
                 <h2 class="f-preset:4 u-color:white">Total</h2>
                 <p class="f-preset:5 u-color:grey-400">/ person</p>
               </div>
-              <h2 id="result-total" class="f-preset:1 u-color:green-400">$0.00</h2>
+              <h2 id="result-total" class="f-preset:1 u-color:green-400">
+                $0.00
+              </h2>
             </div>
           </div>
 

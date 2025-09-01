@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "currency.js": "^2.0.4"
   }
 }
