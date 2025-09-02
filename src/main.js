@@ -35,7 +35,27 @@ function initFunction() {
     decimalPlaces: 2,
     modifyValueOnWheel: true,
     selectOnFocus: false,
+    minimumValue: "0",
   });
+
+  const numberInputs = document.querySelectorAll('input[type="number"]');
+  numberInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      if (Number(input.value) < 0) input.value = 0;
+    });
+    input.addEventListener("blur", () => {
+      if (Number(input.value) < 0) input.value = 0;
+    });
+  });
+
+  // inputBill.addEventListener("change", () => {
+  //   // Синхронізуємо AutoNumeric із тим, що вставив браузер
+  //   anBill.set(inputBill.value);
+
+  //   // Зберігаємо в localStorage
+  //   storeTextInputs(inputBill.id, anBill.getNumber().toString());
+  //   updateValues();
+  // });
 
   inputBill.addEventListener("input", () => {
     storeTextInputs(inputBill.id, anBill.getNumber().toString());
