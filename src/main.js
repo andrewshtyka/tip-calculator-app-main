@@ -157,13 +157,14 @@ function initFunction() {
     let val = inputCustomTip.value;
     val = val.replace(",", ".");
 
-    if (/^0[1-9]/.test(val)) {
+    if (/^0[1-9]/.test(val)) {``
       inputCustomTip.value = val.replace(/^0/, "");
     }
     switchRadioAndInput(inputCustomTip);
     updateValues();
   });
 
+  inputPeople;
   inputPeople.addEventListener("input", () => {
     let val = inputPeople.value;
     val = val.replace(",", ".");
