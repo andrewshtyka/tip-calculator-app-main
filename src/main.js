@@ -1,5 +1,6 @@
 import currency from "currency.js";
 import AutoNumeric from "autonumeric";
+import { gsap } from "gsap";
 
 const dataStorage = JSON.parse(localStorage.getItem("settings")) || {};
 const inputBill = document.getElementById("bill");
@@ -9,6 +10,7 @@ const inputPeople = document.getElementById("people");
 const resultTipAmount = document.getElementById("result-tip");
 const resultTotal = document.getElementById("result-total");
 const buttonReset = document.getElementById("button-reset");
+const lastValues = new WeakMap();
 let values = {};
 let anBill;
 
@@ -246,47 +248,16 @@ function countTipAndTotal() {
   let tip = Number(values.tip) || 0;
   let people = Number(values.people) || 0;
 
-  if (bill > 0 && tip > 0 && people > 0) {
-    // condition 1
-    let tipAmount = (bill * tip) / 100 / people;
-    let totalAmount = bill / people + tipAmount;
-    resultTipAmount.textContent = currency(tipAmount, {
-      separator: ",",
-    }).format();
-    resultTotal.textContent = currency(totalAmount, {
-      separator: ",",
-    }).format();
-  } else if (bill > 0 && tip === 0 && people > 0) {
-    // condition 2
-    let tipAmount = 0;
-    let totalAmount = bill / people + tipAmount;
-    resultTipAmount.textContent = currency(tipAmount, {
-      separator: ",",
-    }).format();
-    resultTotal.textContent = currency(totalAmount, {
-      separator: ",",
-    }).format();
-  } else if (bill > 0 && tip === "" && people > 0) {
-    // condition 3
-    let tipAmount = 0;
-    let totalAmount = bill / people + tipAmount;
-    resultTipAmount.textContent = currency(tipAmount, {
-      separator: ",",
-    }).format();
-    resultTotal.textContent = currency(totalAmount, {
-      separator: ",",
-    }).format();
-  } else {
-    // condition 4
-    let tipAmount = 0;
-    let totalAmount = 0;
-    resultTipAmount.textContent = currency(tipAmount, {
-      separator: ",",
-    }).format();
-    resultTotal.textContent = currency(totalAmount, {
-      separator: ",",
-    }).format();
+  let tipAmount = 0;
+  let totalAmount = 0;
+
+  if (bill > 0 && people > 0) {
+    tipAmount = (bill * tip) / 100 / people;
+    totalAmount = bill / people + tipAmount;
   }
+
+  animateValue(resultTipAmount, tipAmount);
+  animateValue(resultTotal, totalAmount);
 }
 
 // ========================================
@@ -381,10 +352,35 @@ function resetAll(event) {
   updateValues();
 }
 
+// ========================================
+//
+// make button disabled if inputs are empty
 function resetAvailable(billEl, tipEl, peopleEl) {
   if (billEl || tipEl || peopleEl) {
     buttonReset.classList.remove("u-button_disabled");
   } else {
     buttonReset.classList.add("u-button_disabled");
   }
+}
+
+// ========================================
+//
+// animate total figures
+function animateValue(element, newValue) {
+  const prev = lastValues.get(element) ?? 0;
+  const obj = { val: prev };
+
+  gsap.to(obj, {
+    val: newValue,
+    duration: 0.5,
+    ease: "circ.inOut",
+    onUpdate: () => {
+      element.textContent = currency(obj.val, {
+        separator: ",",
+      }).format();
+    },
+    onComplete: () => {
+      lastValues.set(element, newValue);
+    },
+  });
 }

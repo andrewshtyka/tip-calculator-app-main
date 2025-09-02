@@ -136,7 +136,11 @@ body {
   @media (width >= 64rem) {
     padding: calc(var(--space) * 32) calc(var(--space) * 40);
 
-    inline-size: calc(var(--space) * 920);
+    width: clamp(
+      calc(var(--space) * 608),
+      calc(var(--space) * 608 + 30vw),
+      calc(var(--space) * 1024)
+    );
     block-size: calc(var(--space) * 480);
     flex-direction: row;
 
@@ -263,7 +267,7 @@ input[type="number"] {
 
   @media (width >= 64rem) {
     padding: calc(var(--space) * 40);
-    flex: 0 1 calc(var(--space) * 400);
+    flex: 1 1 calc(var(--space) * 400);
     justify-content: space-between;
   }
 }
@@ -316,7 +320,7 @@ input[type="number"] {
   }
 
   @media (width >= 64rem) {
-    flex: 1;
+    flex: 5;
     gap: calc(var(--space) * 40);
     justify-content: center;
   }
