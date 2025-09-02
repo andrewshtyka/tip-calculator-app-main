@@ -153,21 +153,13 @@ function initFunction() {
     });
   });
 
-  // inputCustomTip.addEventListener("input", () => {
-  //   switchRadioAndInput(inputCustomTip);
-  // });
   inputCustomTip.addEventListener("input", () => {
     let val = inputCustomTip.value;
-
-    // Заміна коми на крапку для обробки
     val = val.replace(",", ".");
 
-    // Якщо починається з "0" і далі цифра 1-9, прибираємо "0"
     if (/^0[1-9]/.test(val)) {
       inputCustomTip.value = val.replace(/^0/, "");
     }
-
-    // Далі робимо вже твою стандартну логіку
     switchRadioAndInput(inputCustomTip);
     updateValues();
   });
