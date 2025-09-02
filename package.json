@@ -12,6 +12,7 @@
     "vite": "^7.1.2"
   },
   "dependencies": {
+    "autonumeric": "^4.10.8",
     "currency.js": "^2.0.4"
   }
 }

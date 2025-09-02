@@ -1,14 +1,5 @@
-// FEATURES & LOGIC
-//
-// ❌ add custom formatting for bill value inside input
-//
-// ❌ click on RESET:
-// - bill === 0
-// - custom tip === '' and 5% checked
-// - people === 0
-//
-//
 import currency from "currency.js";
+import AutoNumeric from "autonumeric";
 
 const dataStorage = JSON.parse(localStorage.getItem("settings")) || {};
 const inputBill = document.getElementById("bill");
@@ -17,7 +8,9 @@ const inputCustomTip = document.getElementById("tip-custom");
 const inputPeople = document.getElementById("people");
 const resultTipAmount = document.getElementById("result-tip");
 const resultTotal = document.getElementById("result-total");
+const buttonReset = document.getElementById("button-reset");
 let values = {};
+let anBill;
 
 initFunction();
 
@@ -26,11 +19,28 @@ function initFunction() {
   retrieveTextInputs();
   retrieveRadioInputs();
 
+  anBill = new AutoNumeric(inputBill, {
+    digitGroupSeparator: ",",
+    decimalCharacter: ".",
+    decimalPlaces: 2,
+    modifyValueOnWheel: true,
+  });
+
+  inputBill.addEventListener("input", () => {
+    storeTextInputs(inputBill.id, anBill.getNumber().toString());
+    updateValues();
+  });
+
+  // reset
+  buttonReset.addEventListener("click", resetAll);
+
   // send text data to save function
-  const inputsTypeText = document.querySelectorAll('input[type="number"]');
+  const inputsTypeText = document.querySelectorAll(
+    'input[type="number"], input[type="text"]'
+  );
   inputsTypeText.forEach((input) => {
     input.addEventListener("keydown", (e) => {
-      if (e.key === "-" || e.key === "e" || e.key === ",") {
+      if (e.key === "-" || e.key === "e" || e.key === "," || e.key === " ") {
         e.preventDefault();
       }
 
@@ -45,9 +55,9 @@ function initFunction() {
       if (input.matches("#tip-custom") && input.value > 100) {
         input.value = 100;
       }
-      if (input.value < 0) input.value = "";
 
       storeTextInputs(event.target.id, event.target.value.trim());
+      updateValues();
     });
   });
 
@@ -86,12 +96,11 @@ function initFunction() {
   // validate
   validationBill();
   validationPeople();
-  validationCustomTip();
 }
 
 // save text data to local storage
 function storeTextInputs(inputID, value) {
-  dataStorage[inputID] = value;
+  dataStorage[inputID] = Number(value.replace(/,/g, ""));
   localStorage.setItem("settings", JSON.stringify(dataStorage));
 }
 
@@ -99,7 +108,9 @@ function storeTextInputs(inputID, value) {
 //
 // retrieve text data from local storage
 function retrieveTextInputs() {
-  const inputsTypeText = document.querySelectorAll('input[type="number"]');
+  const inputsTypeText = document.querySelectorAll(
+    'input[type="number"], input[type="text"]'
+  );
   inputsTypeText.forEach((input) => {
     if (!input.value && !dataStorage[input.id]) {
       input.value = "";
@@ -201,7 +212,7 @@ function updateValues() {
 //
 // calculate tip and total amount
 function countTipAndTotal() {
-  let bill = Number(values.bill) || 0;
+  let bill = Number(values.bill.replace(/,/g, "")) || 0;
   let tip = Number(values.tip) || 0;
   let people = Number(values.people) || 0;
 
@@ -237,6 +248,8 @@ function countTipAndTotal() {
     }).format();
   } else {
     // condition 4
+    let tipAmount = 0;
+    let totalAmount = 0;
     resultTipAmount.textContent = currency(tipAmount, {
       separator: ",",
     }).format();
@@ -298,4 +311,27 @@ function validationPeople() {
       errorPeople.hidden = true;
     }
   });
+}
+
+// ========================================
+//
+// Reset button
+function resetAll(event) {
+  event.preventDefault();
+
+  anBill.clear();
+  inputPeople.value = "";
+  inputCustomTip.value = "";
+
+  values = {};
+  localStorage.removeItem("settings");
+
+  const defaultTipRadio = document.querySelector('[name="tip"][value="5"]');
+  if (inputCustomTip.value.trim() === "" && defaultTipRadio) {
+    defaultTipRadio.checked = true;
+  } else {
+    inputsRadioTip.forEach((radio) => (radio.checked = false));
+  }
+
+  updateValues();
 }

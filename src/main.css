@@ -111,7 +111,8 @@ body {
   gap: calc(var(--space) * 32);
 }
 
-.c-input[type="number"] {
+.c-input[type="number"],
+.c-input[type="text"] {
   background-color: var(--color-grey-50);
   padding: calc(var(--space) * 8) calc(var(--space) * 16);
   border-radius: calc(var(--space) * 8);

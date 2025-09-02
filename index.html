@@ -384,11 +384,9 @@
               <input
                 id="bill"
                 class="c-input f-preset:2"
-                type="number"
+                type="text"
                 name="bill"
                 value=""
-                min="0.01"
-                step="1"
                 placeholder="0"
               />
             </div>
@@ -399,7 +397,7 @@
             <p class="f-preset:5 u-color:grey-500">Select Tip %</p>
             <div class="o-radio_grid">
               <div class="c-radio">
-                <input type="radio" id="tip-5" name="tip" value="5" checked />
+                <input type="radio" id="tip-5" name="tip" value="5" />
                 <label class="f-preset:2" for="tip-5" tabindex="0">5%</label>
               </div>
               <div class="c-radio">
@@ -477,7 +475,7 @@
             </div>
           </div>
 
-          <button class="c-button f-preset:3" type="button">Reset</button>
+          <button id="button-reset" class="c-button f-preset:3" type="button">Reset</button>
         </div>
       </article>
     </main>
