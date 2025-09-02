@@ -17,13 +17,13 @@ let anBill;
 initFunction();
 
 function initFunction() {
-  // gsap.from([".o-header", ".c-card"], {
-  //   y: 50,
-  //   opacity: 0,
-  //   duration: 0.8,
-  //   ease: "power1.inOut",
-  //   stagger: 0.2,
-  // });
+  gsap.from([".o-header", ".c-card"], {
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power1.inOut",
+    stagger: 0.2,
+  });
 
   // retrieve data from local storage
   retrieveTextInputs();
