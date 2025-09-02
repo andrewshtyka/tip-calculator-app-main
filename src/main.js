@@ -164,6 +164,17 @@ function initFunction() {
     updateValues();
   });
 
+  inputPeople.addEventListener("input", () => {
+    let val = inputPeople.value;
+    val = val.replace(",", ".");
+
+    if (/^0[1-9]/.test(val)) {
+      inputPeople.value = val.replace(/^0/, "");
+    }
+    switchRadioAndInput(inputPeople);
+    updateValues();
+  });
+
   // count tips and total
   initCountListeners();
   updateValues();
