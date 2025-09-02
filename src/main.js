@@ -24,6 +24,7 @@ function initFunction() {
     decimalCharacter: ".",
     decimalPlaces: 2,
     modifyValueOnWheel: true,
+    selectOnFocus: false,
   });
 
   inputBill.addEventListener("input", () => {
@@ -65,8 +66,15 @@ function initFunction() {
   const inputsTypeRadio = document.querySelectorAll('input[type="radio"]');
   inputsTypeRadio.forEach((input) => {
     input.addEventListener("change", (event) => {
-      event.target.setAttribute.checked;
+      event.target.checked = true;
       storeRadioInputs(event.target.id, event.target.value);
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === " " || event.key === "Enter") {
+        event.target.checked = true;
+        storeRadioInputs(event.target.id, event.target.value);
+      }
     });
   });
 
@@ -83,6 +91,27 @@ function initFunction() {
         switchRadioAndInput(event.target);
       });
     }
+  });
+
+  const radioLabels = document.querySelectorAll(".c-radio label");
+  radioLabels.forEach((label) => {
+    label.addEventListener("keydown", (e) => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault(); // щоб не скролило сторінку
+        const input = document.getElementById(label.getAttribute("for"));
+        input.checked = true;
+        switchRadioAndInput(input);
+        updateValues();
+      }
+
+      if (e.key === "Escape") {
+        e.preventDefault(); // щоб не скролило сторінку
+        const input = document.getElementById(label.getAttribute("for"));
+        input.checked = false;
+        switchRadioAndInput(input);
+        updateValues();
+      }
+    });
   });
 
   inputCustomTip.addEventListener("input", () => {
@@ -206,6 +235,7 @@ function updateValues() {
   values.tip = inputRadioTip ? inputRadioTip.value : inputCustomTip.value;
 
   countTipAndTotal();
+  resetAvailable(values.bill, values.tip, values.people);
 }
 
 // ========================================
@@ -267,10 +297,12 @@ function validationBill() {
     const errorBill = document.getElementById("error-bill");
     if (inputBill.value <= 0) {
       errorBill.hidden = false;
+      inputBill.classList.add("u-input_error");
       errorBill.textContent = "Can’t be zero";
     } else {
-      errorBill.textContent = "";
       errorBill.hidden = true;
+      inputBill.classList.remove("u-input_error");
+      errorBill.textContent = "";
     }
   });
 
@@ -278,10 +310,12 @@ function validationBill() {
     const errorBill = document.getElementById("error-bill");
     if (inputBill.value <= 0) {
       errorBill.hidden = false;
+      inputBill.classList.add("u-input_error");
       errorBill.textContent = "Can’t be zero";
     } else {
-      errorBill.textContent = "";
       errorBill.hidden = true;
+      inputBill.classList.remove("u-input_error");
+      errorBill.textContent = "";
     }
   });
 }
@@ -294,10 +328,12 @@ function validationPeople() {
     const errorPeople = document.getElementById("error-people");
     if (!inputPeople.value || inputPeople.value <= 0) {
       errorPeople.hidden = false;
+      inputPeople.classList.add("u-input_error");
       errorPeople.textContent = "Can’t be zero";
     } else {
-      errorPeople.textContent = "";
       errorPeople.hidden = true;
+      inputPeople.classList.remove("u-input_error");
+      errorPeople.textContent = "";
     }
   });
 
@@ -305,10 +341,12 @@ function validationPeople() {
     const errorPeople = document.getElementById("error-people");
     if (!inputPeople.value || inputPeople.value <= 0) {
       errorPeople.hidden = false;
+      inputPeople.classList.add("u-input_error");
       errorPeople.textContent = "Can’t be zero";
     } else {
-      errorPeople.textContent = "";
       errorPeople.hidden = true;
+      inputPeople.classList.remove("u-input_error");
+      errorPeople.textContent = "";
     }
   });
 }
@@ -326,12 +364,27 @@ function resetAll(event) {
   values = {};
   localStorage.removeItem("settings");
 
-  const defaultTipRadio = document.querySelector('[name="tip"][value="5"]');
-  if (inputCustomTip.value.trim() === "" && defaultTipRadio) {
-    defaultTipRadio.checked = true;
-  } else {
-    inputsRadioTip.forEach((radio) => (radio.checked = false));
-  }
+  inputsRadioTip.forEach((input) => {
+    input.checked = false;
+  });
+
+  //clean mistakes
+  document.querySelectorAll(".u-input_error").forEach((el) => {
+    el.classList.remove("u-input_error");
+  });
+
+  document.querySelectorAll("[id^='error-']").forEach((err) => {
+    err.hidden = true;
+    err.textContent = "";
+  });
 
   updateValues();
+}
+
+function resetAvailable(billEl, tipEl, peopleEl) {
+  if (billEl || tipEl || peopleEl) {
+    buttonReset.classList.remove("u-button_disabled");
+  } else {
+    buttonReset.classList.add("u-button_disabled");
+  }
 }

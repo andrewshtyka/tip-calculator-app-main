@@ -376,7 +376,15 @@
       <article class="c-card">
         <div class="o-card_hero">
           <div class="o-input_area">
-            <label for="bill" class="f-preset:5 u-color:grey-500">Bill</label>
+            <div class="o-input_label">
+              <label for="bill" class="f-preset:5 u-color:grey-500">Bill</label>
+              <span
+                class="f-preset:5 u-color:orange"
+                aria-live="polite"
+                id="error-bill"
+                hidden
+              ></span>
+            </div>
             <div class="o-input_area:wrapper">
               <svg class="c-icon_input" height="16" width="16">
                 <use href="./src/images/icons.svg#icon-dollar" />
@@ -390,7 +398,6 @@
                 placeholder="0"
               />
             </div>
-            <span class="" aria-live="polite" id="error-bill" hidden></span>
           </div>
 
           <div class="o-input_area">
@@ -431,9 +438,17 @@
           </div>
 
           <div class="o-input_area">
-            <label for="people" class="f-preset:4 u-color:grey-500"
-              >Number of People</label
-            >
+            <div class="o-input_label">
+              <label for="people" class="f-preset:4 u-color:grey-500"
+                >Number of People</label
+              >
+              <span
+                class="f-preset:5 u-color:orange"
+                aria-live="polite"
+                id="error-people"
+                hidden
+              ></span>
+            </div>
             <div class="o-input_area:wrapper">
               <svg class="c-icon_input" height="16" width="16">
                 <use href="./src/images/icons.svg#icon-person" />
@@ -448,7 +463,6 @@
                 maxlength="100"
               />
             </div>
-            <span class="" aria-live="polite" id="error-people" hidden></span>
           </div>
         </div>
 
@@ -475,7 +489,13 @@
             </div>
           </div>
 
-          <button id="button-reset" class="c-button f-preset:3" type="button">Reset</button>
+          <button
+            id="button-reset"
+            class="c-button f-preset:3 u-button_disabled"
+            type="button"
+          >
+            Reset
+          </button>
         </div>
       </article>
     </main>

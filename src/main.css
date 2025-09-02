@@ -92,6 +92,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (width >= 64rem) {
+    justify-content: center;
+    padding-bottom: 10svh;
+  }
 }
 
 .c-icon_header {
@@ -109,6 +114,34 @@ body {
   display: flex;
   flex-direction: column;
   gap: calc(var(--space) * 32);
+
+  max-inline-size: calc(var(--space) * 608);
+
+  @media (width >= 40rem) {
+    border-bottom-left-radius: calc(var(--space) * 24);
+    border-bottom-right-radius: calc(var(--space) * 24);
+  }
+
+  @media (width >= 48rem) {
+    padding: calc(var(--space) * 56) calc(var(--space) * 72);
+    gap: calc(var(--space) * 40);
+    max-inline-size: none;
+    width: clamp(
+      calc(var(--space) * 608),
+      calc(var(--space) * 420 + 30vw),
+      calc(var(--space) * 768)
+    );
+  }
+
+  @media (width >= 64rem) {
+    padding: calc(var(--space) * 32) calc(var(--space) * 40);
+
+    inline-size: calc(var(--space) * 920);
+    block-size: calc(var(--space) * 480);
+    flex-direction: row;
+
+    gap: calc(var(--space) * 48);
+  }
 }
 
 .c-input[type="number"],
@@ -118,9 +151,19 @@ body {
   border-radius: calc(var(--space) * 8);
   text-align: end;
 
+  transition: box-shadow 150ms ease-in-out;
+
   &::placeholder {
     color: var(--color-green-900);
     opacity: 0.35;
+  }
+
+  @media (width >= 64rem) {
+    &:hover,
+    &:focus,
+    &:focus-within {
+      box-shadow: 0 0 0 calc(var(--space) * 2) var(--color-green-400);
+    }
   }
 }
 
@@ -161,18 +204,23 @@ input[type="number"] {
 
     color: var(--color-white);
     background-color: var(--color-green-900);
+
+    transition: background-color 150ms ease-in-out;
   }
 
   & input:checked + label {
-    background-color: var(--color-green-400);
+    background-color: var(--color-green-200);
     color: var(--color-green-900);
   }
 
-  /* & label:hover,
-  & label:focus {
-    background-color: var(--color-green-400);
-    outline: none;
-  } */
+  @media (width >= 64rem) {
+    & label:hover,
+    & label:focus,
+    & label:focus-within {
+      background-color: var(--color-green-400);
+      outline: none;
+    }
+  }
 }
 
 .c-radio_custom {
@@ -185,12 +233,21 @@ input[type="number"] {
   height: 100%;
 
   text-align: center;
+  transition: box-shadow 150ms ease-in-out;
 
   &::placeholder {
     color: var(--color-green-900);
     opacity: 0.35;
 
     letter-spacing: calc(var(--space) * -0.7);
+  }
+
+  @media (width >= 64rem) {
+    &:hover,
+    &:focus,
+    &:focus-within {
+      box-shadow: 0 0 0 calc(var(--space) * 2) var(--color-green-400);
+    }
   }
 }
 
@@ -203,14 +260,30 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   gap: calc(var(--space) * 32);
+
+  @media (width >= 64rem) {
+    padding: calc(var(--space) * 40);
+    flex: 0 1 calc(var(--space) * 400);
+    justify-content: space-between;
+  }
 }
 
 .c-button {
-  background-color: var(--color-green-750);
+  background-color: var(--color-green-400);
   color: var(--color-green-900);
   text-transform: uppercase;
   border-radius: calc(var(--space) * 8);
   padding: calc(var(--space) * 8);
+
+  transition: background-color 150ms ease-in-out;
+
+  @media (width >= 64rem) {
+    &:hover,
+    &:focus,
+    &:focus-within {
+      background-color: var(--color-green-200);
+    }
+  }
 }
 
 /* #endregion = COMPONENTS */
@@ -220,6 +293,14 @@ input[type="number"] {
 .o-header {
   padding-top: calc(var(--space) * 50);
   padding-bottom: calc(var(--space) * 40);
+
+  @media (width >= 64rem) {
+    padding-top: 1svh;
+    padding-bottom: calc(var(--space) * 88);
+  }
+  @media (height <= 50rem) {
+    padding-bottom: calc(var(--space) * 40);
+  }
 }
 
 .o-card_hero {
@@ -228,6 +309,17 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   gap: calc(var(--space) * 32);
+
+  @media (width >= 48rem) {
+    padding-inline: 0;
+    gap: calc(var(--space) * 24);
+  }
+
+  @media (width >= 64rem) {
+    flex: 1;
+    gap: calc(var(--space) * 40);
+    justify-content: center;
+  }
 }
 
 .o-input_area {
@@ -245,6 +337,10 @@ input[type="number"] {
   grid-template-columns: repeat(2, 1fr);
   gap: calc(var(--space) * 16);
   grid-auto-rows: 1fr;
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .o-checkout_data {
@@ -257,6 +353,11 @@ input[type="number"] {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+}
+
+.o-input_label {
+  display: flex;
   justify-content: space-between;
 }
 
@@ -278,6 +379,20 @@ input[type="number"] {
 
 .u-color\:white {
   color: var(--color-white);
+}
+
+.u-color\:orange {
+  color: var(--color-orange-400);
+}
+
+.u-input_error {
+  box-shadow: 0 0 0 calc(var(--space) * 2) var(--color-orange-400);
+}
+
+.u-button_disabled {
+  background-color: var(--color-green-750);
+  color: var(--color-green-900);
+  pointer-events: none;
 }
 
 /* #endregion = UTILITIES */
