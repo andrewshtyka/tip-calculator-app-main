@@ -355,14 +355,32 @@ input[type="number"] {
 
 .o-checkout_line {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (width >= 25rem) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .o-input_label {
   display: flex;
   justify-content: space-between;
+}
+
+.o-checkout_labels {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--space) * 8);
+  align-items: flex-end;
+
+  @media (width >= 25rem) {
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+  }
 }
 
 /* #endregion = LAYOUT */

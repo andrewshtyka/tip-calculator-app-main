@@ -62,11 +62,23 @@ function initFunction() {
       }
     });
 
+    inputBill.addEventListener("input", () => {
+      if (anBill.getNumber() > 99999) {
+        anBill.set(99999);
+      }
+
+      storeTextInputs(inputBill.id, anBill.getNumber().toString());
+      updateValues();
+    });
+
     input.addEventListener("input", (event) => {
       if (input.matches("#tip-custom") && input.value > 100) {
         input.value = 100;
       }
 
+      if (input.value > 1000) {
+        input.value = 1000;
+      }
       storeTextInputs(event.target.id, event.target.value.trim());
       updateValues();
     });
