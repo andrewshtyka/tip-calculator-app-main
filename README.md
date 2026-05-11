@@ -14,3 +14,11 @@ Run local server:
 ```js
 npm run dev
 ```
+
+# Tech stack
+
+- JS Vanilla
+- HTML Vanilla
+- CSS Vanilla
+- GSAP
+- Vite 7
